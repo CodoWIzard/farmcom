@@ -1,3 +1,5 @@
+'use client'
+
 interface Product {
   id: string
   name: string
@@ -20,4 +22,51 @@ interface ProductCardProps {
 
 export default function ProductCard({ product, onAddToCart }: ProductCardProps) {
   return (
-    <div className=\"bg-white rounded-lg shadow-md overflow-hidden\">\n      {product.imageUrl && (\n        <img\n          src={product.imageUrl}\n          alt={product.name}\n          className=\"w-full h-48 object-cover\"\n        />\n      )}\n      <div className=\"p-4\">\n        <h3 className=\"text-lg font-semibold text-gray-900\">{product.name}</h3>\n        <p className=\"text-sm text-gray-600 mb-2\">by {product.farmer.name}</p>\n        {product.description && (\n          <p className=\"text-gray-700 text-sm mb-3\">{product.description}</p>\n        )}\n        <div className=\"flex justify-between items-center mb-3\">\n          <span className=\"text-xl font-bold text-green-600\">\n            ${product.price}/{product.unit}\n          </span>\n          <span className=\"text-sm text-gray-500\">\n            {product.quantity} {product.unit} available\n          </span>\n        </div>\n        <div className=\"flex justify-between items-center\">\n          <span className=\"inline-block bg-green-100 text-green-800 text-xs px-2 py-1 rounded\">\n            {product.category}\n          </span>\n          {onAddToCart && (\n            <button\n              onClick={() => onAddToCart(product.id)}\n              className=\"bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700\"\n            >\n              Add to Cart\n            </button>\n          )}\n        </div>\n      </div>\n    </div>\n  )\n}
+    <div className="card group hover:scale-105 transition-all duration-300">
+      {product.imageUrl && (
+        <div className="relative overflow-hidden rounded-xl mb-4">
+          <img
+            src={product.imageUrl}
+            alt={product.name}
+            className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+        </div>
+      )}
+      <div className="space-y-4">
+        <div>
+          <h3 className="text-xl font-bold text-gray-800 mb-1">{product.name}</h3>
+          <p className="text-gray-600 text-sm">🌾 by {product.farmer.name}</p>
+        </div>
+        
+        {product.description && (
+          <p className="text-gray-700 text-sm leading-relaxed">{product.description}</p>
+        )}
+        
+        <div className="flex justify-between items-center">
+          <div className="text-2xl font-bold text-green-700">
+            ${product.price}
+            <span className="text-sm text-gray-600">/{product.unit}</span>
+          </div>
+          <div className="text-sm text-gray-600">
+            📦 {product.quantity} {product.unit}
+          </div>
+        </div>
+        
+        <div className="flex justify-between items-center pt-2">
+          <span className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-medium">
+            {product.category.toLowerCase()}
+          </span>
+          {onAddToCart && (
+            <button
+              onClick={() => onAddToCart(product.id)}
+              className="btn-primary px-6 py-2 text-sm"
+            >
+              🛒 Add to Cart
+            </button>
+          )}
+        </div>
+      </div>
+    </div>
+  )
+}
